@@ -8,7 +8,8 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${file}",
+            "program": "${workspaceRoot}/node_modules/protractor/bin/protractor",
+            "args": ["${workspaceRoot}/protractor.conf.js"],
             "outFiles": [
                 "${workspaceRoot}/out/**/*.js"
             ]

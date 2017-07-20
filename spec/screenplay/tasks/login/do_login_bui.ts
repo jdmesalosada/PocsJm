@@ -1,7 +1,5 @@
 import { LoginPage } from '../../UI/loginPage';
-import {
-    Select, Click, Wait, Is,
-    Duration, Enter, PerformsTasks, See, step, Task
+import {    Select, Click, Wait, Is, Duration, Enter, PerformsTasks, See, step, Task
 } from 'serenity-js/lib/screenplay-protractor';
 import { protractor, browser } from 'protractor';
 
@@ -10,6 +8,7 @@ export class DoLogin {
     static withPass = (pass: string): Task => new EnterPass(pass);
     static withUserName = (username: string): Task => new EnterUsername(username);
     static withCredentials = (username: string, pass: string): Task => new EnterCredentials(username, pass);
+    static submit = () => new ClickOn();
 }
 
 class EnterCredentials implements Task {
@@ -55,5 +54,18 @@ class EnterPass implements Task {
         return actor.attemptsTo(Enter.theValue(this.pass)
             .into(LoginPage.Password)
             .thenHit(protractor.Key.TAB));
+    }
+}
+
+class ClickOn implements Task{
+
+    static submit(){
+        return new ClickOn();
+    } 
+
+    performAs(actor: PerformsTasks): PromiseLike<void> {
+        return actor.attemptsTo(Click.on(
+            LoginPage.Login)
+        )
     }
 }

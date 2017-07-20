@@ -10,6 +10,7 @@ import { Wait, Duration, Is, Scroll, Click } from 'serenity-js/lib/screenplay-pr
 import { Activity, Interaction } from '@serenity-js/core/lib/screenplay';
 //import { DoLogin }  from '../../spec/screenplay/tasks/login/do_login';
 import { DoLogin }  from '../../spec/screenplay/tasks/login/do_login_bui';
+import { Login }  from '../../spec/screenplay/tasks/login/do_login_builder';
 
 //type SuccessCondition<T> = (subject: T, timeout: Duration) => Activity;
 
@@ -81,12 +82,24 @@ export = function loginSteps() {
     )
   });*/
 
-this.When(/^he login into the application with username "([^"]*)" and pass "([^"]*)"$/, function (username: string, pass: string) {
+/*this.When(/^he login into the application with username "([^"]*)" and pass "([^"]*)"$/, function (username: string, pass: string) {
     return this.stage.theActorInTheSpotlight().attemptsTo(
       DoLogin.withCredentials(username, pass),
       Wait.for(Duration.ofMillis(5000)),
     )
+  });*/
+
+
+  this.When(/^he login into the application with username "([^"]*)" and pass "([^"]*)"$/, function (username: string, pass: string) {
+    debugger
+    return this.stage.theActorInTheSpotlight().attemptsTo(
+        Login
+        .Username(username)
+        .Pass(pass)
+        .submit(),
+    )
   });
+
 
   const promiseWhile = (data, condition, action) => {
     var whilst = (data) => {
