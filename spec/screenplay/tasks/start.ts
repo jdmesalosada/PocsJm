@@ -16,7 +16,6 @@ export class Start implements Task {
         return actor.attemptsTo(
             Open.browserOn('/BookedGuest/guestmanagement/mycarnival/logon'),
             ResizeBrowserWindow.toMaximum(),
-            Wait.for(Long_Enough),
             Wait.upTo(Duration.ofSeconds(20)).until(LoginPage.Login, Is.visible()),
         );
     }

@@ -15,4 +15,7 @@ export class HomePage{
 
         public static termsAndConditions = Target.the("tonecs")
         .located(by.xpath("//a[contains(., 'View terms and conditions')]"));
+
+        public static noExistsLocator = Target.the("asdads")
+        .located(by.xpath("//a[@pepito='pepito']"));
 }
