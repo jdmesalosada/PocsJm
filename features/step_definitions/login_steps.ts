@@ -9,10 +9,10 @@ import { HomePage } from "../../spec/screenplay/UI/homePage";
 import { Wait, Duration, Is, Scroll, Click } from 'serenity-js/lib/screenplay-protractor';
 import { Activity, Interaction } from '@serenity-js/core/lib/screenplay';
 //import { DoLogin }  from '../../spec/screenplay/tasks/login/do_login';
-import { DoLogin }  from '../../spec/screenplay/tasks/login/do_login_bui';
-import { Login }  from '../../spec/screenplay/tasks/login/do_login_builder';
-
+import { DoLogin } from '../../spec/screenplay/tasks/login/do_login_bui';
+import { Login } from '../../spec/screenplay/tasks/login/do_login_builder';
 //type SuccessCondition<T> = (subject: T, timeout: Duration) => Activity;
+import { LoginExecutor } from '../../spec/screenplay/tasks/login/builder/loginBuilder';
 
 export = function loginSteps() {
 
@@ -28,7 +28,7 @@ export = function loginSteps() {
 
   this.Given(/^he writes the username (.*)$/, function (username: string) {
     return this.stage.theActorInTheSpotlight().attemptsTo(
-     // EnterUserName.called(username),
+      // EnterUserName.called(username),
     )
   });
 
@@ -39,13 +39,13 @@ export = function loginSteps() {
     browser.debugger();
     debugger;
     return this.stage.theActorInTheSpotlight().attemptsTo(
-     // EnterPass.called(pass),
+      // EnterPass.called(pass),
     )
   });
 
   this.When(/^he clicks the Log in button$/, function () {
     return this.stage.theActorInTheSpotlight().attemptsTo(
-     // SubmitLoginForm.called(),
+      // SubmitLoginForm.called(),
     )
   });
 
@@ -74,23 +74,23 @@ export = function loginSteps() {
     )
   });*/
 
-/*this.When(/^he login into the application with username "([^"]*)" and pass "([^"]*)"$/, function (username: string, pass: string) {
-    return this.stage.theActorInTheSpotlight().attemptsTo(
-      DoLogin.withPass(pass),
-      Wait.for(Duration.ofMillis(5000)),
-      DoLogin.withUserName(username),
-    )
-  });*/
+  /*this.When(/^he login into the application with username "([^"]*)" and pass "([^"]*)"$/, function (username: string, pass: string) {
+      return this.stage.theActorInTheSpotlight().attemptsTo(
+        DoLogin.withPass(pass),
+        Wait.for(Duration.ofMillis(5000)),
+        DoLogin.withUserName(username),
+      )
+    });*/
 
-/*this.When(/^he login into the application with username "([^"]*)" and pass "([^"]*)"$/, function (username: string, pass: string) {
-    return this.stage.theActorInTheSpotlight().attemptsTo(
-      DoLogin.withCredentials(username, pass),
-      Wait.for(Duration.ofMillis(5000)),
-    )
-  });*/
+  /*this.When(/^he login into the application with username "([^"]*)" and pass "([^"]*)"$/, function (username: string, pass: string) {
+      return this.stage.theActorInTheSpotlight().attemptsTo(
+        DoLogin.withCredentials(username, pass),
+        Wait.for(Duration.ofMillis(5000)),
+      )
+    });*/
 
-
-  this.When(/^he login into the application with username "([^"]*)" and pass "([^"]*)"$/, function (username: string, pass: string) {
+  //Firs builder :(
+  /*this.When(/^he login into the application with username "([^"]*)" and pass "([^"]*)"$/, function (username: string, pass: string) {
     debugger
     return this.stage.theActorInTheSpotlight().attemptsTo(
         Login
@@ -98,8 +98,27 @@ export = function loginSteps() {
         .Pass(pass)
         .submit(),
     )
-  });
+  });*/
 
+  /*this.When(/^he login into the application with username "([^"]*)" and pass "([^"]*)"$/, function (username: string, pass: string) {
+    debugger
+    return this.stage.theActorInTheSpotlight().attemptsTo(
+      LoginBuilder
+        .withUsername(username)
+        .withPass(pass)
+        .Submit().build(),
+
+    )
+  });*/
+
+  this.When(/^he login into the application with username "([^"]*)" and pass "([^"]*)"$/, function (username: string, pass: string) {
+    debugger
+    return this.stage.theActorInTheSpotlight().attemptsTo(
+      LoginExecutor.Builder
+        .withPass(pass)
+        .build(),
+    )
+  });
 
   const promiseWhile = (data, condition, action) => {
     var whilst = (data) => {

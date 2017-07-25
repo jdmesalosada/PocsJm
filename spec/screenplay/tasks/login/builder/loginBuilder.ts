@@ -1,47 +1,53 @@
+import { PerformsTasks, Task } from 'serenity-js/lib/screenplay';
+import { Select, step, Click, Wait, Is, Duration, Enter } from 'serenity-js/lib/screenplay-protractor';
+import { LoginPage } from '../../../UI/loginPage';
+import { protractor, browser } from 'protractor';
+import { Question, Text } from 'serenity-js/lib/screenplay-protractor';
+import { Interaction } from "@serenity-js/core/lib/screenplay";
+import { DoLogin } from "../do_login_bui"
 
-export class LoginBuilder{
 
-    private pass : string;
-    private userName : string;
 
-    withPass(pass: string) : LoginBuilder{
-        this.pass = pass;
-        return this;
+export class LoginExecutor implements Task {
+
+    performAs(actor: PerformsTasks): PromiseLike<void> {
+        debugger;
+        return actor.attemptsTo(
+            ...this.tasks
+        );
     }
 
-    withUserName(username : string):LoginBuilder {
-        this.userName = username;
-        return this;
-    }
+    private constructor(private tasks: Task[]) { }
 
-    get Pass(){
-        return this.pass;
-    }
 
-    get UserName(){
-        return this.userName;
-    }
+    static Builder = class   {
 
-    build(): LoginModel {
-        return new LoginModel(this);
-    } 
-}
-
-export class LoginModel {
-
-    private pass:string;
+    private pass: string;
     private userName: string;
+    private static tasks : Task[] = new Array<Task>();
 
-    constructor(loginBuilder: LoginBuilder){
-        this.pass = loginBuilder.Pass;
-        this.userName = loginBuilder.UserName;
+    private constructor() {
+        
+     }
+
+    static withUsername(userName) {
+        debugger
+        this.tasks.push(DoLogin.withUserName(userName));
+        return this;
     }
 
-    get Pass(){
-        return this.pass;
+    static withPass(pass: string)    {
+        this.tasks.push(DoLogin.withPass(pass));
+        return this;
+    }
+    
+    static Submit()    {
+        this.tasks.push(DoLogin.submit());
+        return this;
     }
 
-    get UserName(){
-        return this.userName;
+    static build(): LoginExecutor {
+        return new LoginExecutor(LoginExecutor.Builder.tasks);
     }
+}
 }
