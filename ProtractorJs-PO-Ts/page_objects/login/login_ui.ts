@@ -1,7 +1,8 @@
+
 import { $ } from 'protractor';
 
-export class LoginUI {
+export class LoginUI{
 
-    public UserNameTexbox = $("input#username");
-    public PasswordTextbox = $("input#password");
+    public UserNameTexbox = $("input#email");
+    public PasswordTextbox = $("input#pass");
 }

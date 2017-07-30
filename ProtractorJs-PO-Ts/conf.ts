@@ -11,8 +11,7 @@ export let config: Config = {
 
     framework: 'jasmine',
 
-    baseUrl: 'https://www.carnival.com',
-
+    
     allScriptsTimeout: 60000,
 
     capabilities: {

@@ -7,12 +7,12 @@
         "declaration": false,
         "removeComments": false,
         "noImplicitAny": false,
-        "outDir": "typeScript",
+        "outDir": "testsJs",
         "typeRoots": [ "./node_modules/@types" ],
         "types": ["node","jasmine"]
     },
     "exclude": [
         "node_modules",
-        "typescript"
+        "testsJs"
     ]
 }

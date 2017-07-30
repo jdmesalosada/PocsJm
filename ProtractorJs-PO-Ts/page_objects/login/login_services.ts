@@ -11,7 +11,7 @@ export class LoginServices {
 
     get() {
         browser.waitForAngularEnabled(false);
-        browser.get('http://www.carnival.com');
+        browser.get('http://www.facebook.com');
     }
 
     writePass(pass: string) {
@@ -22,4 +22,3 @@ export class LoginServices {
         this.loginUI.UserNameTexbox.sendKeys(username);
     }
 }
-
