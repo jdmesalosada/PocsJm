@@ -1,0 +1,23 @@
+{
+  "name": "protractorjs-po-ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "tsc": "tsc",
+    "pretest": "npm run tsc",
+    "startDriver": "webdriver-manager start",
+    "test": "protractor typeScript/conf.js",
+    "updateWbdriver": "node node_modules/protractor/bin/webdriver-manager update"
+  },
+  "author": "Julian Mesa",
+  "license": "ISC",
+  "dependencies": {
+    "@types/jasmine": "^2.5.53"
+  },
+  "devDependencies": {
+    "@types/jasminewd2": "^2.0.2",
+    "protractor": "^5.1.2",
+    "ts-node": "^3.3.0"
+  }
+}
