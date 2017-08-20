@@ -1,0 +1,11 @@
+{
+    "login":
+    {
+        "userName":"devPepito",
+        "password": "devPass"
+    },
+
+    "environment":{
+        "url": "https://www.facebook.com"
+    }
+}

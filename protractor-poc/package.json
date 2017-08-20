@@ -1,0 +1,26 @@
+{
+  "name": "protractor-poc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "tsc": "tsc",
+    "pretest": "npm run tsc",
+    "test": "protractor testsJs/conf.js",
+    "inProd": "cross-env-shell NODE_ENV=prod \"echo $NODE_ENV && npm run test",
+    "inDev": "cross-env-shell NODE_ENV=dev \"echo $NODE_ENV && npm run test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/jasmine": "^2.5.53",
+    "protractor": "^5.1.2",
+    "typescript": "^2.4.2"
+  },
+  "devDependencies": {
+    "@types/jasminewd2": "^2.0.2",
+    "config": "^1.26.2",
+    "cross-env": "^5.0.5",
+    "ts-node": "^3.3.0"
+  }
+}
