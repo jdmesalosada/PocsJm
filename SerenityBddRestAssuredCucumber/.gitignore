@@ -1,0 +1,14 @@
+node_modules/
+yarn.lock
+chromedriver.log
+libpeerconnection.log
+xmloutput*
+npm-debug.log
+.idea/
+.vscode/
+*.DS_Store
+*.swp
+selenium/
+package-lock.json
+debug.log
+/target
