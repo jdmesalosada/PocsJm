@@ -1,0 +1,12 @@
+{
+  "name": "firefox-headless",
+  "version": "1.0.0",
+  "description": "Firefox headless",
+  "main": "selenium-test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "selenium-webdriver": "^3.5.0"
+  }
+}

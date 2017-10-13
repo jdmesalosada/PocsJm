@@ -1,0 +1,34 @@
+{
+  "vehiculos":[
+    {
+      "id":1,
+      "marca":"audi",
+      "placa":"ayw678",
+      "color":"blanco"
+    },
+    {
+      "id":2,
+      "marca":"audi",
+      "placa":"ayw679",
+      "color":"negro"
+    },
+    {
+      "id":3,
+      "marca":"volwagen",
+      "placa":"ayw690",
+      "color":"azul"
+    }
+  ],
+  "usuario":[
+    {
+      "id":100000,
+      "nombre":"juan",
+      "apellido":"perez"
+    },
+    {
+      "id":20000,
+      "nombre":"maria",
+      "apellido":"perez"
+    }
+  ]
+}

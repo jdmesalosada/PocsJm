@@ -1,0 +1,1 @@
+to run the sample: node selenium-test.js

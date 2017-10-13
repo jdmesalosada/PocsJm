@@ -21,6 +21,7 @@ public class VehiclesSteps {
     public void juan_wants_to_purchase_a_vehicle() throws Throwable {
         given()
                 .contentType("application/json");
+
     }
 
     @When("^he looks the available vehicles$")
@@ -28,9 +29,20 @@ public class VehiclesSteps {
         when().get("http://localhost:3000/vehiculos");
     }
 
+    @When("^he looks the available vehicles by Id$")
+    public void he_looks_the_available_vehicles_by_Id() throws Throwable {
+        when().get("http://localhost:3000/vehiculos/1");
+    }
+
     @Then("^he must see which vehicles are available$")
     public void he_must_see_which_vehicles_are_available() throws Throwable {
         then().statusCode(200)
                 .body(containsString("audi"));
+    }
+
+    @Then("^he must see the vehicle that match with that Id$")
+    public void he_must_see_the_vehicle_that_match_with_that_Id() throws Throwable {
+        then().statusCode(200)
+                .body(containsString("ayw67p"));
     }
 }
