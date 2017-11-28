@@ -4,4 +4,8 @@
     Welcome to {{title}}!
   </h1>
 </div>
-<div class='app-servers'></div>
+<label></label>
+<p>{{serverName}}</p>
+<input type='text' class='form-control'
+ (input)="onUpdateServerName($event)">
+<app-servers></app-servers>
