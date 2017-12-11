@@ -1,43 +1,58 @@
-
-const crew = require('serenity-js/lib/stage_crew');
-require('ts-node/register');
-
+const
+    crew = require('serenity-js/lib/stage_crew');
+glob = require('glob'),
+    protractor = require.resolve('protractor'),
+    node_modules = protractor.substring(0, protractor.lastIndexOf('node_modules') + 'node_modules'.length),
+    seleniumJar = glob.sync(`${node_modules}/protractor/**/selenium-server-standalone-*.jar`).pop();
 
 exports.config = {
-    // Framework definition - tells Protractor to use Serenity/JS
+
+    baseUrl: 'http://www.gotoclean.com.co',
+
+    seleniumServerJar: seleniumJar,
+
+    allScriptsTimeout: 110000,
+
+    disableChecks: true,
+
+    ignoreUncaughtExceptions: true,
+
     framework: 'custom',
     frameworkPath: require.resolve('serenity-js'),
 
-    baseUrl: 'https://www.carnival.com',
+    serenity: {
+        crew: [
+            crew.serenityBDDReporter(),
 
-    allScriptsTimeout: 60000,
+            // crew.photographer()
 
-    specs: ['features/navigation/*.feature'],
-    cucumberOpts: {
-        require: ['features/**/*.ts'], // loads step definitions
-        format: 'pretty',               // enable console output
-        compiler: 'ts:ts-node/register'   // interpret step definitions as TypeScript. http://serenity-js.org/overview/installation.html#typescript-execution-environment-and-repl-for-nodejs
+            crew.Photographer.who(_ => _
+                .takesPhotosOf(_.Failures)
+            )
 
+            // crew.consoleReporter()
+        ]
     },
 
-    serenity: {
-        dialect: 'cucumber',
-        stageCueTimeout: 30 * 1000,   // up to 30 seconds by default
-
-        crew: [
-            //crew.serenityBDDReporter(),
-            // crew.photographer(),
-            crew.consoleReporter(), //to see what tasks are being performed, but were not interested in producing the report
-        ],
+    specs: ['features/**/*.feature'],
+    cucumberOpts: {
+        require: ['features/**/*.ts'],
+        format: 'pretty',
+        compiler: 'ts:ts-node/register'
     },
 
     capabilities: {
         browserName: 'chrome',
         chromeOptions: {
             args: [
-                // 'incognito',
-                // 'disable-extensions',
+                '--disable-infobars',
+                // "--headless",
+                // "--disable-gpu",
+                // "--window-size=1024x768"
+                // '--incognito',
+                // '--disable-extensions',
+                // '--show-fps-counter=true'
             ]
         }
     }
-}
+};

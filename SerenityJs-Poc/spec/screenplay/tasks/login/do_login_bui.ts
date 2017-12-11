@@ -10,7 +10,6 @@ export class DoLogin {
     static withUserName = (username: string): Task => new EnterUsername(username);
     static withCredentials = (username: string, pass: string): Task => new EnterCredentials(username, pass);
     static submit = () => new ClickOn();
-    static mock = () => new Mock();
 }
 
 class EnterCredentials implements Task {
@@ -25,7 +24,8 @@ class EnterCredentials implements Task {
         return actor.attemptsTo(
             EnterUsername.value(this.username),
             EnterPass.value(this.pass),
-        )
+            new ClickOn()
+        );
     }
 }
 
@@ -38,26 +38,29 @@ class EnterUsername implements Task {
     }
 
     performAs(actor: PerformsTasks): PromiseLike<void> {
-        return actor.attemptsTo(Enter.theValue(this.username)
-            .into(LoginPage.UserName)
-            .thenHit(protractor.Key.TAB),
-            Wait.for(Duration.ofMillis(6000)));
-    }
+        return actor.attemptsTo(
+            Wait.until(LoginPage.UserName, Is.visible()),
+            Enter.theValue(this.username)
+                .into(LoginPage.UserName)
+                .thenHit(protractor.Key.TAB));
+    };
 }
 
 class EnterPass implements Task {
 
     constructor(private pass: string) { }
 
+    // tslint:disable-next-line:typedef
     static value(pass: string) {
         return new EnterPass(pass);
     }
 
     performAs(actor: PerformsTasks): PromiseLike<void> {
-        return actor.attemptsTo(Enter.theValue(this.pass)
-            .into(LoginPage.Password)
-            .thenHit(protractor.Key.TAB),
-            Wait.for(Duration.ofMillis(6000))
+        return actor.attemptsTo(
+            Wait.until(LoginPage.Password, Is.visible()),
+            Enter.theValue(this.pass)
+                .into(LoginPage.Password)
+                .thenHit(protractor.Key.TAB),
         );
     }
 }
@@ -69,16 +72,9 @@ class ClickOn implements Task {
     }
 
     performAs(actor: PerformsTasks): PromiseLike<void> {
-        return actor.attemptsTo(Click.on(
-            LoginPage.Login)
-        )
-    }
-}
-
-class Mock implements Task {
-
-    performAs(actor: PerformsTasks): PromiseLike<void> {
         return actor.attemptsTo(
+            Wait.until(LoginPage.Login, Is.visible()),
+            Click.on(LoginPage.Login)
         );
-    }
+    };
 }

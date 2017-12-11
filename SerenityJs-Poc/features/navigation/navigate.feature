@@ -15,5 +15,5 @@ Feature: User is able to navigate through the application
 Scenario: Log into application with Builder
 
 Given that James opens the Login page
-When he login into the application with username "XXXXX@carnival.com" and pass "XXXX" 
-Then his must be redirected to the Home Page
+When he login into the application
+Then he must be redirected to the Home Page

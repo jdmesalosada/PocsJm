@@ -1,4 +1,4 @@
-import { Open, PerformsTasks, ResizeBrowserWindow, step, Task, Click, Wait, Duration, Is } from 'serenity-js/lib/screenplay-protractor';
+import { Open, PerformsTasks, ResizeBrowserWindow, step, Task, Wait, Duration, Is } from 'serenity-js/lib/screenplay-protractor';
 import {LoginPage} from './../UI/loginPage';
 
 const Default_Timeout = Duration.ofMillis(300),
@@ -14,13 +14,12 @@ export class Start implements Task {
     @step('start entering the page')
     performAs(actor: PerformsTasks): PromiseLike<void> {
         return actor.attemptsTo(
-            Open.browserOn('/BookedGuest/guestmanagement/mycarnival/logon'),
+            Open.browserOn('/perfil/'),
             ResizeBrowserWindow.toMaximum(),
             Wait.upTo(Duration.ofSeconds(20)).until(LoginPage.Login, Is.visible()),
         );
     }
 
-    constructor() {
-    }
+    constructor() {}
 
 }
