@@ -26,7 +26,7 @@ export = function loginSteps() {
 
   this.When(/^he login into the application$/, function () {
     return this.stage.theActorInTheSpotlight().attemptsTo(
-      DoLogin.withCredentials('jdmesalosada', '1234567890.')
+      DoLogin.withCredentials(process.env.cleanUser, process.env.cleanPass)
     );
   });
 
