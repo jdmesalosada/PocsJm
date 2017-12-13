@@ -8,9 +8,7 @@ import { protractor, browser } from 'protractor';
 import { HomePage } from "../../spec/screenplay/UI/homePage";
 import { Wait, Duration, Is, Scroll, Click } from 'serenity-js/lib/screenplay-protractor';
 import { Activity, Interaction } from '@serenity-js/core/lib/screenplay';
-//import { DoLogin }  from '../../spec/screenplay/tasks/login/do_login';
 import { DoLogin } from '../../spec/screenplay/tasks/login/do_login_bui';
-
 
 export = function loginSteps() {
 
@@ -20,7 +18,6 @@ export = function loginSteps() {
     return this.stage.theActorCalled(name).attemptsTo(
       Start.start()
     );
-
   });
 
 
