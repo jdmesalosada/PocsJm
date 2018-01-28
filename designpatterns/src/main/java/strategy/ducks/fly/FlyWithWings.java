@@ -1,8 +1,6 @@
-package strategy.concrete.fly;
+package strategy.ducks.fly;
 
-import strategy.interfaces.FlyBehavior;
-
-import javax.sound.midi.SysexMessage;
+import strategy.ducks.interfaces.Fly.FlyBehavior;
 
 public class FlyWithWings  implements FlyBehavior {
 

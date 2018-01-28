@@ -1,6 +1,6 @@
-package strategy.concrete.quack;
+package strategy.ducks.quack;
 
-import strategy.interfaces.QuackBehavior;
+import strategy.ducks.interfaces.Quack.QuackBehavior;
 
 public class Quack implements QuackBehavior {
     public void quack() {

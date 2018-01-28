@@ -1,6 +1,6 @@
-package strategy.concrete.fly;
+package strategy.ducks.fly;
 
-import strategy.interfaces.FlyBehavior;
+import strategy.ducks.interfaces.Fly.FlyBehavior;
 
 public class FlyNoWay implements FlyBehavior {
     public void fly() {
