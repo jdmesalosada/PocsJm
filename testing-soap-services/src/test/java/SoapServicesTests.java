@@ -1,24 +1,27 @@
 import com.jayway.restassured.http.ContentType;
-import com.jayway.restassured.path.xml.XmlPath;
-import com.jayway.restassured.response.Response;
 import org.testng.annotations.Test;
 
-import javax.xml.soap.*;
-
-import static com.jayway.restassured.RestAssured.*;
-import static com.jayway.restassured.path.xml.XmlPath.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
+import javax.activation.DataHandler;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.soap.SOAPException;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.transform.stream.StreamSource;
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.jayway.restassured.RestAssured.given;
 
 public class SoapServicesTests {
 
 //references: https://github.com/eing/restassured_cli/wiki/RESTAssured-XML-SOAP-service-example
 
     @Test
-    public void testPoc() throws SOAPException {
+    public void testPoc() throws JAXBException, XMLStreamException, SOAPException, IOException {
 
         String baseURI = "http://www.dneonline.com/";
 
@@ -32,7 +35,6 @@ public class SoapServicesTests {
         SOAPEnvelope envelope = soapPart.getEnvelope();
         SOAPBody soapBody = envelope.getBody();*/
 
-
         String myEnvelope = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
                 "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
                 "  <soap:Body>\n" +
@@ -44,7 +46,7 @@ public class SoapServicesTests {
                 "</soap:Envelope>";
 
 
-        Response xml = given()
+        String xmlResponse = given()
                 .baseUri(baseURI)
                 .headers(headers)
                 .body(myEnvelope)
@@ -54,15 +56,20 @@ public class SoapServicesTests {
                 .assertThat()
                 .contentType(ContentType.XML)
                 .statusCode(200)
-                .extract().response();
+                .extract().response().asString();
+
+        //String prettyXML = with(xml.asString()).prettyPrint();
+        System.out.print(xmlResponse);
+      /*  String actualResult = new XmlPath(xml.asString()).getString("Envelope.Body.AddResponse.AddResult");
+        assertThat(actualResult, is("2"));*/
 
 
-        String prettyXML = with(xml.asString()).prettyPrint();
-        System.out.println(prettyXML);
+        JAXBContext jaxbContext = JAXBContext.newInstance(org.tempuri.AddResponse.class);
+        Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 
-        String actualResult = new XmlPath(xml.asString()).getString("Envelope.Body.AddResponse.AddResult");
-        assertThat(actualResult, is("2"));
-
+        StringReader reader = new StringReader(xmlResponse);
+        org.tempuri.AddResponse car = (org.tempuri.AddResponse) jaxbUnmarshaller.unmarshal(reader);
+        System.out.print(car);
     }
 
 }
