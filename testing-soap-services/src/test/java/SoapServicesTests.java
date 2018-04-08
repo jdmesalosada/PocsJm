@@ -1,16 +1,12 @@
 import com.jayway.restassured.http.ContentType;
 import org.testng.annotations.Test;
 
-import javax.activation.DataHandler;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.soap.SOAPException;
+import javax.xml.soap.*;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.stream.StreamSource;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +17,7 @@ public class SoapServicesTests {
 //references: https://github.com/eing/restassured_cli/wiki/RESTAssured-XML-SOAP-service-example
 
     @Test
-    public void testPoc() throws JAXBException, XMLStreamException, SOAPException, IOException {
+    public void testPoc() throws SOAPException, IOException {
 
         String baseURI = "http://www.dneonline.com/";
 
@@ -64,12 +60,21 @@ public class SoapServicesTests {
         assertThat(actualResult, is("2"));*/
 
 
-        JAXBContext jaxbContext = JAXBContext.newInstance(org.tempuri.AddResponse.class);
+        /*JAXBContext jaxbContext = JAXBContext.newInstance(AddResponse.class);
         Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 
         StringReader reader = new StringReader(xmlResponse);
-        org.tempuri.AddResponse car = (org.tempuri.AddResponse) jaxbUnmarshaller.unmarshal(reader);
-        System.out.print(car);
+        AddResponse car = (AddResponse) jaxbUnmarshaller.unmarshal(reader);
+        System.out.print(car);*/
+
+        MessageFactory mFactory = MessageFactory.newInstance();
+        SOAPMessage msg = mFactory.createMessage();
+        msg.getSOAPPart().setContent(new StreamSource(new ByteArrayInputStream(xmlResponse.getBytes("utf-8"))));
+        SOAPBody soapBody = msg.getSOAPBody();
+        SOAPElement soapElement = (SOAPElement)soapBody.getChildElements().next();
+        System.out.print(soapElement);
+        System.out.print(soapElement);
+
     }
 
 }

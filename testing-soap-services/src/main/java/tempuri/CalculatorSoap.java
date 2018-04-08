@@ -1,5 +1,5 @@
 
-package org.tempuri;
+package tempuri;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
