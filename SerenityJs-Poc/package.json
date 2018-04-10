@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "preinpc": "serenity update",
     "inpc": "failsafe clean protractor report",
-    "runDebug" : "failsafe clean protractorDebug report",
+    "runDebug": "failsafe clean protractorDebug report",
     "protractorDebug": "node --inspect ./node_modules/protractor/bin/protractor ./protractor.conf.js",
     "preprotractor": "npm run webdriver:update -- --standalone",
     "protractor": "node ./node_modules/protractor/bin/protractor ./protractor.conf.js --silent",
@@ -15,7 +15,7 @@
     "webdriver:update": "npm run webdriver-manager update",
     "clean": "rimraf target",
     "report": "serenity run",
-    "protractorMobile": "node  ./node_modules/protractor/bin/protractor ./protractor.conf.js -- --capabilities.chromeOptions.args=--window-size=340,480"    
+    "protractorMobile": "node  ./node_modules/protractor/bin/protractor ./protractor.conf.js -- --capabilities.chromeOptions.args=--window-size=340,480"
   },
   "author": "Julian Mesa",
   "license": "ISC",
