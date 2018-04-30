@@ -11,6 +11,11 @@ app.get('/api/courses', (req, res) => {
   res.send(['1,2,3,4']);
 });
 
+//id va a ser el nombre del parametro que vamos a esperar.
+app.get('/api/courses/:id', (req, res) => {
+     res.send(req.params.id);
+});
+
 //Con esto primero leemos la variable de ambiente en caso de no existir entonces se toma
 //el valor 3000
 const port = process.env.PORT || 3000;
