@@ -16,6 +16,11 @@ app.get('/api/courses/:id', (req, res) => {
      res.send(req.params.id);
 });
 
+//si recibimos multiples parametros en la url sería
+app.get('/api/posts/:year/:month', (req, res) => {
+  res.send(req.params);
+});
+
 //Con esto primero leemos la variable de ambiente en caso de no existir entonces se toma
 //el valor 3000
 const port = process.env.PORT || 3000;
