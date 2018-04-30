@@ -21,6 +21,13 @@ app.get('/api/posts/:year/:month', (req, res) => {
   res.send(req.params);
 });
 
+//Para obteneer los parametros query es decir los que van despues de ?
+// usamos req.query
+//http://localhost:3000/api/books/1/2?sortBy=name
+app.get('/api/books/:year/:month', (req, res) => {
+  res.send(req.query);
+});
+
 //Con esto primero leemos la variable de ambiente en caso de no existir entonces se toma
 //el valor 3000
 const port = process.env.PORT || 3000;
