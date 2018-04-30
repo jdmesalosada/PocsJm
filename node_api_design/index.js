@@ -3,13 +3,20 @@ const app = express(); //return an object
 
 //this function requires two paramters, the path
 // and a callback that is going to be executed when the path is called.
-app.get('/', (req, res) = > {
+app.get('/', (req, res) => {
   res.send('Hello World');
-})
-;
+});
+
+app.get('/api/courses', (req, res) => {
+  res.send(['1,2,3,4']);
+});
+
+//Con esto primero leemos la variable de ambiente en caso de no existir entonces se toma
+//el valor 3000
+const port = process.env.PORT || 3000;
 
 //Adicionalmente podemos llamar una funcion cuando nuestro servidor
 //este escuchando por el puerto
-app.listen(3000, () = > {
-  console.log('Listening on port 3000 ...')
+app.listen(port, () => {
+  console.log(`Listening on port ${port} ...`);
 });
