@@ -67,11 +67,21 @@ app.listen(port, () => {
 
 app.post('/api/courses', (req, res) => {
 
-  if(!req.body.name || req.body.name.length < 3)
+  //el esquema me define  la figura del objeto.
+  //que propiedades tenemos en dicho objeto.
+  //el tipo de dato, la longitud, el rango.
+  // si es requerido o no el atributo
+  const schema = {
+      name: Joi.string().min(3).required()
+  };
+
+  const result =  Joi.validate(req.body, schema);
+  //if(!req.body.name || req.body.name.length < 3)
+  if(result.error)
   {
     //Si no viene el nombre o su longitud es menor a 3 devolvemos un 400 que es la convención
     //de Bad request
-    res.status(400).send('Name is required and should be mimum 3 characters');
+    res.status(400).send(result.error);
     return;
   }
   
