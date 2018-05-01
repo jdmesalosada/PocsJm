@@ -62,7 +62,7 @@ app.listen(port, () => {
 
 
 /******############# */
-//POST #
+// ########## POST ######
 /******############## */
 
 app.post('/api/courses', (req, res) => {
@@ -71,17 +71,13 @@ app.post('/api/courses', (req, res) => {
   //que propiedades tenemos en dicho objeto.
   //el tipo de dato, la longitud, el rango.
   // si es requerido o no el atributo
-  const schema = {
-      name: Joi.string().min(3).required()
-  };
-
-  const result =  Joi.validate(req.body, schema);
+  const result = validateCourse(req.body);
   //if(!req.body.name || req.body.name.length < 3)
   if(result.error)
   {
     //Si no viene el nombre o su longitud es menor a 3 devolvemos un 400 que es la convención
     //de Bad request
-    res.status(400).send(result.error);
+    res.status(400).send(result.error.details[0].message);
     return;
   }
   
@@ -93,3 +89,42 @@ app.post('/api/courses', (req, res) => {
   res.send(course) ;
 
 });
+
+/******############# */
+// ########## PUT ######
+/******############## */
+app.put('/api/courses/:id', (req, res) => {
+
+  const courseId = req.params.id;
+  const course = courses.find(c => c.id === parseInt(req.params.id));
+
+  if(!course){
+    res.status(404).send(`The course with the given ID ${courseId} was not found.`);
+  }
+
+  //Object Destructuring.
+  //The object returned by this method has two properties error and value.
+  //Como en este caso queremos el error ponemos el nombre de dicha propiedad.
+  const { error } = validateCourse(req.body);
+
+ if(error)
+ {
+   //Si no viene el nombre o su longitud es menor a 3 devolvemos un 400 que es la convención
+   //de Bad request
+   res.status(400).send(error.details[0].message);
+   return;
+ }
+
+ course.name = req.body.name;
+ res.send(course);
+
+});
+
+function validateCourse(course){
+  const schema = {
+    name: Joi.string().min(3).required()
+  };
+  console.log(Joi.validate(course, schema));
+ return Joi.validate(course, schema);
+
+}
