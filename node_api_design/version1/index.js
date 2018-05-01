@@ -34,7 +34,7 @@ app.get('/api/courses/:id', (req, res) => {
   const courseId = req.params.id;
   const course = courses.find(c => c.id === parseInt(req.params.id));
   //if there is not any course we return: 404
-  if (!course) res.status(404).send(`The course with the given ID ${courseId} was not found.`);
+  if (!course) return res.status(404).send(`The course with the given ID ${courseId} was not found.`);
   res.send(course);
 });
 
@@ -71,14 +71,12 @@ app.post('/api/courses', (req, res) => {
   //que propiedades tenemos en dicho objeto.
   //el tipo de dato, la longitud, el rango.
   // si es requerido o no el atributo
-  const result = validateCourse(req.body);
-  //if(!req.body.name || req.body.name.length < 3)
-  if(result.error)
+  const { error } = validateCourse(req.body);//object destructuring
+  if(error)
   {
     //Si no viene el nombre o su longitud es menor a 3 devolvemos un 400 que es la convención
     //de Bad request
-    res.status(400).send(result.error.details[0].message);
-    return;
+    return res.status(400).send(error.details[0].message);
   }
   
   const course = {
@@ -98,9 +96,7 @@ app.put('/api/courses/:id', (req, res) => {
   const courseId = req.params.id;
   const course = courses.find(c => c.id === parseInt(req.params.id));
 
-  if(!course){
-    res.status(404).send(`The course with the given ID ${courseId} was not found.`);
-  }
+  if(!course) return res.status(404).send(`The course with the given ID ${courseId} was not found.`);
 
   //Object Destructuring.
   //The object returned by this method has two properties error and value.
@@ -111,8 +107,7 @@ app.put('/api/courses/:id', (req, res) => {
  {
    //Si no viene el nombre o su longitud es menor a 3 devolvemos un 400 que es la convención
    //de Bad request
-   res.status(400).send(error.details[0].message);
-   return;
+   return res.status(400).send(error.details[0].message);
  }
 
  course.name = req.body.name;
@@ -122,9 +117,35 @@ app.put('/api/courses/:id', (req, res) => {
 
 function validateCourse(course){
   const schema = {
+    //La propiedad name dentro del body debe tener un minimo de tres caracteres y es requerido.
     name: Joi.string().min(3).required()
   };
   console.log(Joi.validate(course, schema));
  return Joi.validate(course, schema);
 
 }
+
+
+/******############# */
+// ########## DELETE ######
+/******############## */
+
+app.delete('/api/courses/:id', (req, res) => {
+
+  const course = courses.find(c => c.id === parseInt(req.params.id));
+  const courseId = req.params.id;
+  /*if(!course){
+    res.status(404).send(`The course with the given ID ${courseId} was not found.`);
+    return;
+  }*/
+  //Una forma de escribir el mismo codigo en la misma linea es la siguiente:
+
+  if(!course) return res.status(404).send(`The course with the given ID ${courseId} was not found.`);
+
+  //delete
+  const index = courses.indexOf(course);
+  courses.splice(index, 1);
+
+  res.send(course);
+
+});
