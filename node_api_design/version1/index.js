@@ -1,5 +1,6 @@
 const express = require('express'); //return a funcion
 const app = express(); //return an object
+const Joi = require('joi');
 
 //Habilita el parseo de objetos json en express,
 //por defecto esta caracteristica viene apagada por lo que usando 
@@ -66,16 +67,19 @@ app.listen(port, () => {
 
 app.post('/api/courses', (req, res) => {
 
-  if(!req.body.name || req.body.name < 3)
+  if(!req.body.name || req.body.name.length < 3)
   {
     //Si no viene el nombre o su longitud es menor a 3 devolvemos un 400 que es la convención
     //de Bad request
-    
+    res.status(400).send('Name is required and should be mimum 3 characters');
+    return;
   }
+  
   const course = {
     id: courses.length + 1,
     name: req.body.name,
   }
   courses.push(course);
-  res.send(course);
+  res.send(course) ;
+
 });
