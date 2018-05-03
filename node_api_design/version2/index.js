@@ -29,6 +29,10 @@ app.use(express.static('public'));// Con este middleware podemos servir contenid
 
 //app.use(morgan());
 
+app.set('view engine', 'pug'); // internamente express carga el pug module ya no es necesario usar require.
+app.set('views', './views'); //default
+
+
 if(app.get('env') === 'development'){
   app.use(morgan('tiny'));
   startupDebugger('Morgan enabled...');
@@ -59,7 +63,8 @@ const courses = [
 //this function requires two paramters, the path
 // and a callback that is going to be executed when the path is called.
 app.get('/', (req, res) => {
-  res.send('Hello World');
+  //res.send('Hello World');
+  res.render('index', {title: 'my express app', message: 'hello'})
 });
 
 app.get('/api/courses', (req, res) => {
