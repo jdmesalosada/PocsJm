@@ -1,0 +1,6 @@
+{
+    "description":"el valor app_password hace referencia a una variable de entorno.",
+    "mail": {   
+        "password": "app_password"
+    }
+}

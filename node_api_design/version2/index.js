@@ -1,7 +1,13 @@
+const config = require('config');
 const express = require('express'); //return a funcion
 const app = express(); //return an object
 const Joi = require('joi');
 const morgan = require('morgan'); // middlware to log the request
+const startupDebugger = require('debug')('app:startup'); //app:startup es un nombre arbitrario que le ponemos a nuestro logger.
+// para poderlo usar debeomos crear la env DEBUG y ponerle el valor. Por ejemplo: DEBUG=app:startup
+const dbDebugger = require('debug')('app:db');
+
+
 
 //Custom middleware function
 const logger = require('./logger');
@@ -12,6 +18,8 @@ const authenticate = require('./authentication');
 //la siguient linea la prendemos.
 app.use(express.json());
 
+console.log(`NODE_ENV: ${process.env.NODE_ENV} `); // Si la variable no esta seteada aca se obtiene undefined
+console.log(`app: ${app.get('env')}`); // y aca se obtiene development
 
 app.use(express.urlencoded({extended: true}));// Este middleware bàsicamente toma un request como key=value&key=value
 //los parsea y pobla el objeto req.body como un objeto json.
@@ -19,7 +27,20 @@ app.use(express.urlencoded({extended: true}));// Este middleware bàsicamente to
 app.use(express.static('public'));// Con este middleware podemos servir contenido estatico
 // como imagenes archivos, css, entre otros.
 
-app.use(morgan());
+//app.use(morgan());
+
+if(app.get('env') === 'development'){
+  app.use(morgan('tiny'));
+  startupDebugger('Morgan enabled...');
+}
+
+dbDebugger('Connected to database');
+
+//CONFIG
+console.log('Application name: ' + config.get('name'));
+console.log('Mail server: ' +  config.get('mail.host'));
+console.log('Mail server: ' +  config.get('mail.password'));
+
 
 //Next es una referencia a la siguiente middleware function.
 // en el pipeline de procesamiendo request.
