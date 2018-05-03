@@ -11,6 +11,13 @@ const authenticate = require('./authentication');
 //la siguient linea la prendemos.
 app.use(express.json());
 
+
+app.use(express.urlencoded({extended: true}));// Este middleware bàsicamente toma un request como key=value&key=value
+//los parsea y pobla el objeto req.body como un objeto json.
+
+app.use(express.static('public'));// Con este middleware podemos servir contenido estatico
+// como imagenes archivos, css, entre otros.
+
 //Next es una referencia a la siguiente middleware function.
 // en el pipeline de procesamiendo request.
 // Si no ponemos el next la respuesta al usuario se va a colgar, ya que no estamos terminando el ciclo
