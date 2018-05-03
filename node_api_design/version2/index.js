@@ -1,6 +1,7 @@
 const express = require('express'); //return a funcion
 const app = express(); //return an object
 const Joi = require('joi');
+const morgan = require('morgan'); // middlware to log the request
 
 //Custom middleware function
 const logger = require('./logger');
@@ -18,6 +19,7 @@ app.use(express.urlencoded({extended: true}));// Este middleware bàsicamente to
 app.use(express.static('public'));// Con este middleware podemos servir contenido estatico
 // como imagenes archivos, css, entre otros.
 
+app.use(morgan());
 
 //Next es una referencia a la siguiente middleware function.
 // en el pipeline de procesamiendo request.
