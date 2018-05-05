@@ -30,5 +30,4 @@ getUser(1)
     .then(user => getRepositories(user.gitHubUsername))
     .then(repos => getCommits(repos[0]))
     .then(commits => console.log('Commits', commits))
-    .catch(error => console.log('Error', error.message))
-    ;
+    .catch(error => console.log('Error', error.message));
