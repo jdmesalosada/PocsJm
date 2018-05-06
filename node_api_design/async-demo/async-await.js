@@ -35,10 +35,15 @@ async function displayCommits(){
     // En este caso el hilo va a buscar el usuario, va a dejar ejecutando la tarea y va a ejecutar otra cosa
     //una vez se resuelva y se obtenga el usuario va a ir a buscar los repo, se va a liberr para ejecutar otra tarea, 
     //una vez se obtenga el repo vuelve acá, y asi sucesivamente.
+    try{
 const user = await getUser(1);
 const repos = await getRepositories(user.gitHubUsername);
 const commits = await getCommits(repos[0]);
 console.log(commits);
+}
+catch(err){
+    console.log('Error', err);
+}
 }
 
 displayCommits();

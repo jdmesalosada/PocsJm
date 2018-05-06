@@ -1,4 +1,3 @@
-exports.addTested = function(value) {
-  var result = value + ' tested';
-  return result;
-}
+exports.addTest = function(value1, value2) {
+    return  value1 + value2;
+  }

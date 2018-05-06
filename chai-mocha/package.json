@@ -1,15 +1,16 @@
 {
   "name": "chai-mocha",
   "version": "1.0.0",
-  "description": "",
+  "description": "Mocha: Es un framework de pruebas. Permite ejecutar las pruebas en Node y en el navegador. Permite la generación de reportes acerca del resultado de la ejecución.",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha --reporter spec"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "chai": "^4.1.2",
-    "mocha": "^5.1.0"
+    "mocha": "^5.1.1"
   }
 }
