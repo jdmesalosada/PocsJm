@@ -30,7 +30,9 @@ const courseSchema = new mongoose.Schema({
         required: function () { // Con esto decimos que si la propiedad published es true
             //entonces el campo price va a ser obligatorio.
             return this.isPublised;
-        }
+        },
+        min: 10,
+        max: 200
     }
 });
 
