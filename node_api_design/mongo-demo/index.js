@@ -8,11 +8,30 @@ mongoose.connect('mongodb://localhost/playground')
 
 
 const courseSchema = new mongoose.Schema({
-    name: String,
+    name: {
+        type: String,
+        required: true,
+        minlength: 5,
+        maxlength: 255,
+        //match: /pattern/
+    },
+    category: {
+        type: String,
+        required: true,
+        enum: ['web', 'mobile', 'network'] // Con esto decimos que el campo
+        //category solo puede tener estos valores: 'web', 'mobile', 'network'
+    },
     author: String,
     tags: [String],
     date: { type: Date, default: Date.now },
-    isPublised: Boolean
+    isPublised: Boolean,
+    price: {
+        type: Number,
+        required: function () { // Con esto decimos que si la propiedad published es true
+            //entonces el campo price va a ser obligatorio.
+            return this.isPublised;
+        }
+    }
 });
 
 //Cuando usamos pascal casing es porque estamos definiendo una clase y no un objeto.
@@ -27,8 +46,13 @@ async function createCourse() {
         isPublised: true
     });
 
-    const result = await course.save();
-    console.log(result);
+    try {
+        const result = await course.save();
+        console.log(result);
+    } catch (ex) {
+        console.log(ex.message);
+    }
+
 }
 
 async function getCourses() {
@@ -62,7 +86,7 @@ async function comparisonQueryOperators() {
         //.find({ price: {$gt: 10, $lte: 20} }) // Aca estamos expresando que queremos
         //los cursos que tenga un precio mayor a 10
         //despues del signo $ va alguno de los operadores de comparación.
-        .find({ price: { $in: [10, 15,20] } }) // traemos cursos que tenga los valores 10, 15, 20.
+        .find({ price: { $in: [10, 15, 20] } }) // traemos cursos que tenga los valores 10, 15, 20.
         .limit(10)
         .sort({ name: 1 })
         .select({ name: 1, tags: 1 })
@@ -78,7 +102,7 @@ async function logicalQueryOperators() {
 
     const courses = await Course
         .find()
-        .or([{author: 'Julian'}, {isPublised: true}]) // Aca decimos
+        .or([{ author: 'Julian' }, { isPublised: true }]) // Aca decimos
         //traiga los cursos donde el author sea Julian o los cursos donde la propiedad
         // isPublised sea igual a true.
         //.and([{author: 'Julian'}, {isPublised: true}]) 
@@ -94,9 +118,9 @@ async function logicalQueryOperators() {
 //Consiste en buscar un documento por su id
 //Modificamos sus propiedades.
 //y llamamos el metodo Save()
-async function upateCourseApproachQueryFirst(id){
+async function upateCourseApproachQueryFirst(id) {
     const course = await Course.findById(id);
-    if(!course) return;
+    if (!course) return;
     course.isPublised = true;
     course.author = 'Another author';
 
@@ -111,19 +135,34 @@ async function upateCourseApproachQueryFirst(id){
 //Update a course using the approach: Update first
 //En vez de devolver el documento primero
 //vamos a la base de datos y lo actualizamos directamente.
-async function upateCourseApproachUpdateFirst(id){
-    const result = await Course.update({_id:id}, {
-        $set:{
+async function upateCourseApproachUpdateFirst(id) {
+    const result = await Course.update({ _id: id }, {
+        $set: {
             author: 'juli update',
             isPublised: false
         }
     });
-    
+
     console.log(result);
+
+    /*const course = await Course.findByIdAndUpdate(id, {
+        $set: {
+            author: 'juli update',
+            isPublised: false
+        }
+    }, {new: true});//Esta propiedad es para obtener el documento con los valores actualizados.
+    console.log(course);*/
+}
+
+async function removeCourse(id) {
+    const result = await Course.deleteOne({ _id: id });
+    console.log(result);
+
 }
 
 //createCourse();
 //getCourses();
 //getCoursesByFilter();
 //upateCourseApproachQueryFirst('5aef7a8693a9042089f3fccc');
-upateCourseApproachUpdateFirst('5aef7a8693a9042089f3fccc');
+//upateCourseApproachUpdateFirst('5aef7a8693a9042089f3fccc');
+removeCourse('5aef7a8693a9042089f3fccc');
