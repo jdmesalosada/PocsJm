@@ -22,7 +22,18 @@ const courseSchema = new mongoose.Schema({
         //category solo puede tener estos valores: 'web', 'mobile', 'network'
     },
     author: String,
-    tags: [String],
+    //tags: [String],
+    tags: { // Forzamos a que los cursos tengan por lo menos un tag.
+        type: Array,
+        validate: {  // Validador personalizado.
+            validator: function (v) {
+                return v && v.length > 0; //validamos que el arreglo
+                //tenga por lo menos un valor y que no sea nulo.
+            },
+            message: 'A course should have at least one tag.'//Mensaje personalizado cuando
+            //se presente el error.
+        }
+    },
     date: { type: Date, default: Date.now },
     isPublised: Boolean,
     price: {
