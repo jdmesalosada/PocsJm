@@ -32,20 +32,98 @@ async function createCourse() {
 }
 
 async function getCourses() {
-    const courses =  await Course.find();
+    const courses = await Course.find();
     console.log(courses);
 }
 
-async function getCoursesByFilter(){
+async function getCoursesByFilter() {
     //Aplicamos un filtro para encontrar los cursos
     //que tenga como author Julian y que este publicados.
     const courses = await Course
-        .find({ author: 'Vanessa', isPublised: true})
+        .find({ author: 'Vanessa', isPublised: true })
         .limit(10)
-        .sort({ name: 1 });// El 1 indica en orden ascendente, y -1 en orden descendente.
+        .sort({ name: 1 })// El 1 indica en orden ascendente, y -1 en orden descendente.
+        .select({ name: 1, tags: 1 })// Con select indicamos solo las propiedades que queremos
+    //obtener, en este caso solo vamos a traer la propiedad name y tags.
     console.log(courses);
+}
+
+async function comparisonQueryOperators() {
+    //eq (equal)
+    //ne (not equal)
+    //gt (greather than)
+    //gte (greather tha or equal to)
+    //lt (less than)
+    //lte (less than or equal to)
+    //in
+    //nin (not in)
+
+    const courses = await Course
+        //.find({ price: {$gt: 10, $lte: 20} }) // Aca estamos expresando que queremos
+        //los cursos que tenga un precio mayor a 10
+        //despues del signo $ va alguno de los operadores de comparación.
+        .find({ price: { $in: [10, 15,20] } }) // traemos cursos que tenga los valores 10, 15, 20.
+        .limit(10)
+        .sort({ name: 1 })
+        .select({ name: 1, tags: 1 })
+
+    console.log(courses);
+
+}
+
+async function logicalQueryOperators() {
+
+    //or
+    //and
+
+    const courses = await Course
+        .find()
+        .or([{author: 'Julian'}, {isPublised: true}]) // Aca decimos
+        //traiga los cursos donde el author sea Julian o los cursos donde la propiedad
+        // isPublised sea igual a true.
+        //.and([{author: 'Julian'}, {isPublised: true}]) 
+        .limit(10)
+        .sort({ name: 1 })
+        .select({ name: 1, tags: 1 })
+
+    console.log(courses);
+
+}
+
+//Update a course using the approach: Query first
+//Consiste en buscar un documento por su id
+//Modificamos sus propiedades.
+//y llamamos el metodo Save()
+async function upateCourseApproachQueryFirst(id){
+    const course = await Course.findById(id);
+    if(!course) return;
+    course.isPublised = true;
+    course.author = 'Another author';
+
+    /*course.set({
+        isPublised: true, author: 'Another auhtor'
+    });*/
+
+    const result = await course.save();
+    console.log('Result: ', result);
+}
+
+//Update a course using the approach: Update first
+//En vez de devolver el documento primero
+//vamos a la base de datos y lo actualizamos directamente.
+async function upateCourseApproachUpdateFirst(id){
+    const result = await Course.update({_id:id}, {
+        $set:{
+            author: 'juli update',
+            isPublised: false
+        }
+    });
+    
+    console.log(result);
 }
 
 //createCourse();
 //getCourses();
-getCoursesByFilter();
+//getCoursesByFilter();
+//upateCourseApproachQueryFirst('5aef7a8693a9042089f3fccc');
+upateCourseApproachUpdateFirst('5aef7a8693a9042089f3fccc');
