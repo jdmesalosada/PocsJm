@@ -18,8 +18,9 @@ const courseSchema = new mongoose.Schema({
     category: {
         type: String,
         required: true,
-        enum: ['web', 'mobile', 'network'] // Con esto decimos que el campo
+        enum: ['web', 'mobile', 'network'], // Con esto decimos que el campo
         //category solo puede tener estos valores: 'web', 'mobile', 'network'
+        lowercase: true // esta propiedad aplica para los strings basicamente mongoose convierte el valor a lowercase,
     },
     author: String,
     //tags: [String],
@@ -128,7 +129,7 @@ async function logicalQueryOperators() {
         .or([{ author: 'Julian' }, { isPublised: true }]) // Aca decimos
         //traiga los cursos donde el author sea Julian o los cursos donde la propiedad
         // isPublised sea igual a true.
-        //.and([{author: 'Julian'}, {isPublised: true}]) 
+        //.and([{author: 'Julian'}, {isPublised: true}])
         .limit(10)
         .sort({ name: 1 })
         .select({ name: 1, tags: 1 })
