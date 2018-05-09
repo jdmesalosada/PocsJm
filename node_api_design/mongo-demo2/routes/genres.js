@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const router = express.Router();
+const Joi = require('joi');
 
 //1. Creamos el esquema y el modelo.
 const Genre = mongoose.model(
@@ -26,7 +27,7 @@ router.post("/", async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   let genre = new Genre({ name: req.body.name });
-  genre = await Genre.save();
+  genre = await genre.save();
   res.send(genre);
 });
 
