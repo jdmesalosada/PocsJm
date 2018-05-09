@@ -1,28 +1,12 @@
-const mongoose = require("mongoose");
+/*const { customer } = require('../models/customer');
+Si importamos el modulo de esta manera,  para acceder a las dos propiedades
+que en este caso son el customer y la funcion validate tocaria
+usarlas así customer.Customer. y customer.validate. Un mejor enfoque es usar
+destructuración de objetos: const {Customer, validate } = require('../models/customer');
+*/
+const { Customer, validate } = require("../models/customer");
 const express = require("express");
 const router = express.Router();
-const Joi = require("joi");
-
-//1. Creamos el esquema y el modelo.
-const Customer = mongoose.model(
-  "Customer",
-  new mongoose.Schema({
-    name: {
-      type: String,
-      required: true,
-      minlength: 5,
-      maxlength: 50
-    },
-    isGold: {
-      type: Boolean,
-      required: true
-    },
-    phone: {
-      type: String,
-      required: true
-    }
-  })
-);
 
 router.get("/", async (req, res) => {
   //ponemos la funcion asincrona
@@ -31,10 +15,10 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { error } = validateCustomer(req.body);
+  const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  let customer = new Customer({ 
+  let customer = new Customer({
     name: req.body.name,
     phone: req.body.phone,
     isGold: req.body.isGold
@@ -43,19 +27,22 @@ router.post("/", async (req, res) => {
   res.send(customer);
 });
 
-function validateCustomer(customer) {
-  const schema = {
-    name: Joi.string()
-      .min(3)
-      .required(),
-    phone: Joi.string()
-      .min(5)
-      .max(50)
-      .required(),
-    isGold: Joi.boolean().required(),
-  };
+router.put("/:id", async (req, res) => {
+  const { error } = validate(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
 
-  return Joi.validate(customer, schema);
-}
+  const customer = await Customer.findByIdAndUpdate(req.params.id, {
+    name: req.body.name,
+    phone: req.body.phone,
+    isGold: req.body.isGold
+  });
+
+  if (!customer)
+    return res
+      .status(404)
+      .send("The customer with the given ID was not found.");
+
+  res.send(customer);
+});
 
 module.exports = router;
