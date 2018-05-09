@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const router = express.Router();
-const Joi = require('joi');
+const Joi = require("joi");
 
 //1. Creamos el esquema y el modelo.
 const Customer = mongoose.model(
@@ -13,7 +13,7 @@ const Customer = mongoose.model(
       minlength: 5,
       maxlength: 50
     },
-    isGold:{
+    isGold: {
       type: Boolean,
       required: true
     },
@@ -43,7 +43,12 @@ function validateCustomer(customer) {
   const schema = {
     name: Joi.string()
       .min(3)
-      .required()
+      .required(),
+    phone: Joi.string()
+      .min(5)
+      .max(50)
+      .required(),
+    isGold: Joi.boolean()
   };
 
   return Joi.validate(customer, schema);
