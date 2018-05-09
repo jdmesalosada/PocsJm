@@ -26,9 +26,14 @@ const courseSchema = new mongoose.Schema({
     tags: { // Forzamos a que los cursos tengan por lo menos un tag.
         type: Array,
         validate: {  // Validador personalizado.
-            validator: function (v) {
-                return v && v.length > 0; //validamos que el arreglo
-                //tenga por lo menos un valor y que no sea nulo.
+             isAsync: true,
+            validator: function (v, callback) {
+               setTimeout(()=>{
+                 const result = v && v.length > 0; //validamos que el arreglo
+              //tenga por lo menos un valor y que no sea nulo.
+                 callback(result);
+               }, 4000);
+
             },
             message: 'A course should have at least one tag.'//Mensaje personalizado cuando
             //se presente el error.
@@ -55,7 +60,7 @@ async function createCourse() {
     const course = new Course({
         name: 'Angular course',
         author: 'Vanessa',
-        tags: ['angular', 'frontend'],
+       // tags: ['angular', 'frontend'],
         isPublised: true
     });
 
@@ -173,9 +178,9 @@ async function removeCourse(id) {
 
 }
 
-//createCourse();
+createCourse();
 //getCourses();
 //getCoursesByFilter();
 //upateCourseApproachQueryFirst('5aef7a8693a9042089f3fccc');
 //upateCourseApproachUpdateFirst('5aef7a8693a9042089f3fccc');
-removeCourse('5aef7a8693a9042089f3fccc');
+//removeCourse('5aef7a8693a9042089f3fccc');
