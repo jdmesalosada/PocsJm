@@ -32,8 +32,7 @@ const courseSchema = new mongoose.Schema({
                  const result = v && v.length > 0; //validamos que el arreglo
               //tenga por lo menos un valor y que no sea nulo.
                  callback(result);
-               }, 4000);
-
+               }, 1000);
             },
             message: 'A course should have at least one tag.'//Mensaje personalizado cuando
             //se presente el error.
@@ -59,16 +58,22 @@ async function createCourse() {
     //aqui usamos camel case convention ya que nos estamos refiriendo a un objeto.
     const course = new Course({
         name: 'Angular course',
+        category:'-',
         author: 'Vanessa',
-       // tags: ['angular', 'frontend'],
+        tags: ['angular', 'frontend'],
+        //tags: null,
         isPublised: true
+        //price:15
     });
 
     try {
         const result = await course.save();
         console.log(result);
     } catch (ex) {
-        console.log(ex.message);
+      for(field in ex.errors){
+        console.log(ex.errors[field].message);
+      }
+
     }
 
 }
