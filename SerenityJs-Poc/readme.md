@@ -40,3 +40,37 @@ a depurar:
 "--cucumberOpts.name",
 "Log into application with Builder"
 ]
+
+
+////////
+
+MAC
+
+Debug -> Add configuration... -> node -> attach
+Ejecutamos el comando: which node
+
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Attach by Process ID",
+            "processId": "${command:PickProcess}"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program",
+            "program": "${workspaceRoot}/node_modules/protractor/bin/protractor",
+            "stopOnEntry": false,
+            "runtimeExecutable":"/usr/local/bin/node",
+            "args": ["--cucumberOpts.name",
+            "Log into application with Builder"
+            ]
+        }
+    ]
+}

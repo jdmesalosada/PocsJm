@@ -15,7 +15,7 @@ export class Start implements Task {
     performAs(actor: PerformsTasks): PromiseLike<void> {
         return actor.attemptsTo(
             Open.browserOn('/perfil/'),
-            ResizeBrowserWindow.toMaximum(),
+          //  ResizeBrowserWindow.toMaximum(),
             Wait.upTo(Duration.ofSeconds(20)).until(LoginPage.Login, Is.visible()),
         );
     }
