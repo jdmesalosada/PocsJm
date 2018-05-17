@@ -1,5 +1,6 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
+Joi.objectId = require('joi-objectid')(Joi);
 
 const Rental = mongoose.model('Rental', new mongoose.Schema({
     //El porque usamos un nuevo esquema customer aca y no reusamos el que esta ya definido
@@ -61,8 +62,8 @@ const Rental = mongoose.model('Rental', new mongoose.Schema({
 
 function validateRental(rental){
     const schema = {
-        customerId: Joi.string().required(),
-        movieId: Joi.string().required()
+        customerId: Joi.objectId().required(),
+        movieId: Joi.objectId().required()
     };
 
     return Joi.validate(rental, schema);
