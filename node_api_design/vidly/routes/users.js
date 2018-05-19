@@ -3,7 +3,17 @@ const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const express = require('express');
 const _ = require('lodash');
+const config = require('config');
+const jwt = require('jsonwebtoken');
+const auth = require('../middleware/auth');
 const router = express.Router();
+
+//para obtener información del usuario que actualmente esta logueado
+router.get('/me', auth, async(req, res) => {
+    //excluimos la propiedad password usando -
+     const user = await User.findById(req.user._id).select('-password'); 
+     res.send(user);
+});
 
 router.post('/', async (req, res) => {
     const { error } = validate(req.body);
@@ -30,7 +40,8 @@ router.post('/', async (req, res) => {
 
     //cuando llamamos este metodo pick obtenemos un nuevo objeto
     //con las propiedades elegidas del objeto pasado como argumento.
-    res.send(_.pick(user, ['name', 'email']));
+    const token = user.generateAuthToken();
+    res.header('x-auth-token', token).send(_.pick(user, ['_id', 'name', 'email']));
 });
 
 module.exports = router;

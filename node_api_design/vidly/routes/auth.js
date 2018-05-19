@@ -21,10 +21,11 @@ router.post('/', async (req, res) => {
     //user.password, tiene el hash de la contraseña con el salt.
     //req.body.password es el texto plano de la constraseña que envía el usuario.
     const validPassword = await bcrypt.compare(req.body.password, user.password);
-
     if (!validPassword) return res.status(400).send('Invalid user or password.');
 
-    res.send(true);
+    const token = user.generateAuthToken();
+
+    res.send(token);
 });
 
 function validate(req) {

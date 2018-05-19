@@ -1,3 +1,4 @@
+const config = require('config');
 const mongoose = require('mongoose');
 const genres = require('./routes/genres');
 const customers = require('./routes/customers');
@@ -9,6 +10,15 @@ const express = require('express');
 const app = express();
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
+
+//Ejecutar para la creacion de la variable
+//para la generacion de la firma digital: export vidly_jwtPrivateKey=mySecureKey
+if (!config.get('jwtPrivateKey')){
+  console.log('FATAL ERROR: jwtPrivateKey is not defined');
+  //El codigo 0 indica que algo fue satisfactorio.
+  //Diferente de 0 que algo salio mal.
+  process.exit(1);
+}
 
 mongoose.connect('mongodb://localhost/vidly')
   .then(() => console.log('Connected to MongoDB...'))
