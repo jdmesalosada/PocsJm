@@ -10,9 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^2.0.1",
     "express": "^4.16.2",
     "fawn": "^2.1.5",
     "joi": "^13.1.0",
+    "lodash": "^4.17.10",
     "mongoose": "^5.0.2"
   }
 }
