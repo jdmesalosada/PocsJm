@@ -1,13 +1,14 @@
+const asyncMiddleware = require('../middleware/async');
 const {Genre, validate} = require('../models/genre');
 const mongoose = require('mongoose');
 const express = require('express');
 const auth = require('../middleware/auth');
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', asyncMiddleware(async (req, res, next) => {
   const genres = await Genre.find().sort('name');
   res.send(genres);
-});
+}));
 
 //pasamos el middleware function auth para que sea ejecutado
 //antes del midleware route, con el fin de validar
