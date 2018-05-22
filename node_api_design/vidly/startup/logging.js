@@ -1,3 +1,7 @@
+const winston = require('winston');//logger
+require('winston-mongodb');
+require('express-async-errors');
+
 module.exports = function() {
   //event emitter.
   //Si tenemos una excepcion y esta no estra dentro de un bloque try catch
