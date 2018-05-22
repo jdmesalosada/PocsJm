@@ -1,6 +1,6 @@
-const winston = require('winston');//logger
-require('winston-mongodb');
-require('express-async-errors');
+const winston = require("winston"); //logger
+require("winston-mongodb");
+require("express-async-errors");
 
 module.exports = function() {
   //event emitter.
@@ -13,6 +13,7 @@ module.exports = function() {
 });*/
 
   winston.handleExceptions(
+    new winston.transports.Console({ colorize: true, prettyPrint: true }),
     new winston.transports.File({ filename: "uncaughExceptions.log" })
   );
 
