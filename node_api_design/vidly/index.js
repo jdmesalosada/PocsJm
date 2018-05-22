@@ -1,3 +1,4 @@
+require('express-async-errors');
 const config = require('config');
 const mongoose = require('mongoose');
 const genres = require('./routes/genres');
@@ -10,6 +11,8 @@ const express = require('express');
 const app = express();
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
+
+const error = require('./middleware/error');
 
 //Ejecutar para la creacion de la variable
 //para la generacion de la firma digital: export vidly_jwtPrivateKey=mySecureKey
@@ -31,6 +34,9 @@ app.use('/api/movies', movies);
 app.use('/api/rentals', rentals);
 app.use('/api/users', users);
 app.use('/api/auth', auth);
+
+//La funcion middleware de error tiene que ser definida, después de todas las funciones middleware
+app.use(error);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
