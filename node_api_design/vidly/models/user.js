@@ -11,22 +11,23 @@ const userSchema = new mongoose.Schema({
     maxlength: 50
   },
   email: {
-      type: String,
-      required: true,
-      minlength: 5,
-      maxlength: 255,
-      unique: true
-    },
-    password: {
-      type: String,
-      required: true,
-      minlength: 5,
-      maxlength: 1024
-    }
+    type: String,
+    required: true,
+    minlength: 5,
+    maxlength: 255,
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 5,
+    maxlength: 1024
+  },
+  isAdmin: Boolean
 });
 
-userSchema.methods.generateAuthToken = function(){
-  return jwt.sign({_id: this._id}, config.get('jwtPrivateKey'));
+userSchema.methods.generateAuthToken = function () {
+  return jwt.sign({ _id: this._id, isAdmin: this.isAdmin }, config.get('jwtPrivateKey'));
 }
 
 const User = mongoose.model('User', userSchema);
@@ -42,4 +43,4 @@ function validateUser(user) {
 }
 
 exports.User = User;
-exports.validate  = validateUser;
+exports.validate = validateUser;
