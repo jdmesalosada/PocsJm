@@ -1,4 +1,6 @@
 require('express-async-errors');
+const winston = require('winston');//logger
+require('winston-mongodb');
 const config = require('config');
 const mongoose = require('mongoose');
 const genres = require('./routes/genres');
@@ -11,12 +13,14 @@ const express = require('express');
 const app = express();
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
-
 const error = require('./middleware/error');
+
+winston.add(winston.transports.File, { filename: 'logfile.log' })
+winston.add(winston.transporst.mongoDB, { db: 'mongodb://localhost/vidly'});
 
 //Ejecutar para la creacion de la variable
 //para la generacion de la firma digital: export vidly_jwtPrivateKey=mySecureKey
-if (!config.get('jwtPrivateKey')){
+if (!config.get('jwtPrivateKey')) {
   console.log('FATAL ERROR: jwtPrivateKey is not defined');
   //El codigo 0 indica que algo fue satisfactorio.
   //Diferente de 0 que algo salio mal.
