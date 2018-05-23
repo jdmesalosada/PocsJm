@@ -71,7 +71,7 @@ describe("registerUser", () => {
     //''
     //0
     //false
-    const args = [unll, undefined, NaN, "", 0, false];
+    const args = [null, undefined, NaN, "", 0, false];
     args.forEach(a => {
       expect(() => {
         lib.registerUser(a);
