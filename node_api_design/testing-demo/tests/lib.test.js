@@ -1,64 +1,83 @@
-const lib = require('../lib');
+const lib = require("../lib");
 
 //test es una función que viene con jest. La funcion test la podemos reemplazar por it
 //el primer argumento es el nombre del test.
 //el segundo argumento es una funcion donde implementamos nuestro test
 //En jasmine tenemos la función describe para agrupar un conjunto de funciones
 //relacionadas.
-describe('absoulte', () => {
-    it('should return a positive number if input is positive', () => {
-        const result = lib.absolute(1);
-        expect(result).toBe(1);
-    });
+describe("absoulte", () => {
+  it("should return a positive number if input is positive", () => {
+    const result = lib.absolute(1);
+    expect(result).toBe(1);
+  });
 
-    it('should return a positive number if input is negative', () => {
-        const result = lib.absolute(-1);
-        expect(result).toBe(1);
-    });
+  it("should return a positive number if input is negative", () => {
+    const result = lib.absolute(-1);
+    expect(result).toBe(1);
+  });
 
-    it('should return 0 if input is 0', () => {
-        const result = lib.absolute(0);
-        expect(result).toBe(0);
-    });
+  it("should return 0 if input is 0", () => {
+    const result = lib.absolute(0);
+    expect(result).toBe(0);
+  });
 });
 
-describe('greet', () => {
-    it('should return the greeting message', () => {
-        const result = lib.greet('Juli');
-        expect(result).toMatch(/Juli/);
-        expect(result).toContain('Juli');
-    })
+describe("greet", () => {
+  it("should return the greeting message", () => {
+    const result = lib.greet("Juli");
+    expect(result).toMatch(/Juli/);
+    expect(result).toContain("Juli");
+  });
 });
 
-describe('getCurrencies', () => {
-    it('should return supported currencies', () => {
-        const result = lib.getCurrencies();
+describe("getCurrencies", () => {
+  it("should return supported currencies", () => {
+    const result = lib.getCurrencies();
 
-        //Too general -> no nos agrega mucho valor.
-        //por ejemplo si modificaramos la funcion y devolvieramos 1 el test seguiri pasando
-        //au cuando hemos ingresado un bug.
-        /*expect(result).toBeDefined();
+    //Too general -> no nos agrega mucho valor.
+    //por ejemplo si modificaramos la funcion y devolvieramos 1 el test seguiri pasando
+    //au cuando hemos ingresado un bug.
+    /*expect(result).toBeDefined();
         expect(result).not.toBeNull();*/
 
-        //Too specific -> EL problema con este enfoque es que estamos probando
-        //exactamente el orden en que vienen los elementos
-        // y puede que esto no genere valor.
-        /*expect(result[0].toBe('USD'));
+    //Too specific -> EL problema con este enfoque es que estamos probando
+    //exactamente el orden en que vienen los elementos
+    // y puede que esto no genere valor.
+    /*expect(result[0].toBe('USD'));
         expect(result[1].toBe('AUD'));
         expect(result[1].toBe('EUR'));
         expect(result.length).toBe(3);*/
 
-        //Proper way
-        //Aca no se valida el orden solo que las monedas soportadas esten.
-        expect(result).toEqual(expect.arrayContaining(['EUR', 'USD', 'AUD']));
-    })
+    //Proper way
+    //Aca no se valida el orden solo que las monedas soportadas esten.
+    expect(result).toEqual(expect.arrayContaining(["EUR", "USD", "AUD"]));
+  });
 });
 
-describe('getProduct', () => {
-    it('should return the product with the given id', () => {
-        const result = lib.getProduct(1);
-        expect(result).toEqual({id: 1, price: 10});
-        expect(result).toMatchObject({id: 1, price: 10});
-        expect(result).toHaveProperty('id', 1);
+describe("getProduct", () => {
+  it("should return the product with the given id", () => {
+    const result = lib.getProduct(1);
+    expect(result).toEqual({ id: 1, price: 10 });
+    expect(result).toMatchObject({ id: 1, price: 10 });
+    expect(result).toHaveProperty("id", 1);
+  });
+});
+
+describe("registerUser", () => {
+  it("should throw if username is falsy", () => {
+    //Null
+    //undefined
+    //nan
+    //''
+    //0
+    //false
+    const args = [unll, undefined, NaN, "", 0, false];
+    args.forEach(a => {
+      expect(() => {
+        lib.registerUser(a);
+      }).toThrow();
     });
+  });
+
+  it("", () => {});
 });
