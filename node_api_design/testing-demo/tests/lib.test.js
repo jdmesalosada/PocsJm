@@ -1,4 +1,6 @@
 const lib = require("../lib");
+const db = require("../db");
+const mail = require("../mail");
 
 //test es una función que viene con jest. La funcion test la podemos reemplazar por it
 //el primer argumento es el nombre del test.
@@ -81,7 +83,44 @@ describe("registerUser", () => {
 
   it("should return a user objet if a valid username is passed", () => {
     const result = lib.registerUser("juli");
-    expect(result).toMatchObject({ username: "juli"});
+    expect(result).toMatchObject({ username: "juli" });
     expect(result.id).toBeGreaterThan(0);
+  });
+});
+
+//Mock functions
+describe("applyDiscount", () => {
+  it("should apply 10% discount if customer has more than 10 points", () => {
+    db.getCustomerSync = function(customerId) {
+      console.log("Fake reading customer");
+      return { id: customerId, points: 20 };
+    };
+
+    const order = { customerId: 1, totalPrice: 10 };
+    lib.applyDiscount(order);
+    expect(order.totalPrice).toBe(9);
+  });
+});
+
+describe("notifyCustomer", () => {
+  it("should send an email to the customer", () => {
+    //Antes de llamar esto debemos reemplazar la implementación
+    //de db.GetCustomerSync, porque no vamos a leer la base de datos
+    //vamos a simular que ya la leimos y tenemos el objeto.
+    //Asi que traemos el modulo que tiene dicha implementacion: const db = require("../db");
+    //y a la funcion la sobreescribmos así:
+    // db.getCustomerSync = function (customerId){ return ... }
+    //reemplazamos la implementación real de nuestro : getCustomerSync
+    db.getCustomerSync = function(customerId) {
+      return { mail: "a" };
+    };
+
+    let mailSent = false;
+    mail.send = function(email, message) {
+      mailSent = true;
+    };
+
+    lib.notifyCustomer({ customerId: 1 });
+    expect(mailSent).toBe(true);
   });
 });
