@@ -79,5 +79,9 @@ describe("registerUser", () => {
     });
   });
 
-  it("", () => {});
+  it("should return a user objet if a valid username is passed", () => {
+    const result = lib.registerUser("juli");
+    expect(result).toMatchObject({ username: "juli"});
+    expect(result.id).toBeGreaterThan(0);
+  });
 });
