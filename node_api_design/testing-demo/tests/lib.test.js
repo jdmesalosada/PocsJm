@@ -124,3 +124,23 @@ describe("notifyCustomer", () => {
     expect(mailSent).toBe(true);
   });
 });
+
+
+describe("notifyCustomer with jest mock function ", () => {
+  it("should send an email to the customer", () => {
+    
+    const mockFunction = jest.fn();
+
+    db.getCustomerSync = function(customerId) {
+      return { mail: "a" };
+    };
+
+    let mailSent = false;
+    mail.send = function(email, message) {
+      mailSent = true;
+    };
+
+    lib.notifyCustomer({ customerId: 1 });
+    expect(mailSent).toBe(true);
+  });
+});
