@@ -24,9 +24,41 @@ describe('absoulte', () => {
 
 describe('greet', () => {
     it('should return the greeting message', () => {
-       const result = lib.greet('Juli');
-       expect(result).toMatch(/Juli/);
-       expect(result).toContain('Juli');
+        const result = lib.greet('Juli');
+        expect(result).toMatch(/Juli/);
+        expect(result).toContain('Juli');
     })
 });
 
+describe('getCurrencies', () => {
+    it('should return supported currencies', () => {
+        const result = lib.getCurrencies();
+
+        //Too general -> no nos agrega mucho valor.
+        //por ejemplo si modificaramos la funcion y devolvieramos 1 el test seguiri pasando
+        //au cuando hemos ingresado un bug.
+        /*expect(result).toBeDefined();
+        expect(result).not.toBeNull();*/
+
+        //Too specific -> EL problema con este enfoque es que estamos probando
+        //exactamente el orden en que vienen los elementos
+        // y puede que esto no genere valor.
+        /*expect(result[0].toBe('USD'));
+        expect(result[1].toBe('AUD'));
+        expect(result[1].toBe('EUR'));
+        expect(result.length).toBe(3);*/
+
+        //Proper way
+        //Aca no se valida el orden solo que las monedas soportadas esten.
+        expect(result).toEqual(expect.arrayContaining(['EUR', 'USD', 'AUD']));
+    })
+});
+
+describe('getProduct', () => {
+    it('should return the product with the given id', () => {
+        const result = lib.getProduct(1);
+        expect(result).toEqual({id: 1, price: 10});
+        expect(result).toMatchObject({id: 1, price: 10});
+        expect(result).toHaveProperty('id', 1);
+    });
+});
