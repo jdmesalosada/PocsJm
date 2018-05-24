@@ -125,22 +125,13 @@ describe("notifyCustomer", () => {
   });
 });
 
-
 describe("notifyCustomer with jest mock function ", () => {
   it("should send an email to the customer", () => {
-    
-    const mockFunction = jest.fn();
-
-    db.getCustomerSync = function(customerId) {
-      return { mail: "a" };
-    };
-
-    let mailSent = false;
-    mail.send = function(email, message) {
-      mailSent = true;
-    };
-
+    db.getCustomerSync = jest.fn().mockReturnValue({ email: "a" });
+    mail.send = jest.fn();
+  
     lib.notifyCustomer({ customerId: 1 });
-    expect(mailSent).toBe(true);
+    //expect(mail.send).toHaveBeenCalled();
+    expect(mail.send).toHaveBeenCalledWith('a', "Your order was placed successfully.");
   });
 });
