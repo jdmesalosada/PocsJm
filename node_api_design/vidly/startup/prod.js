@@ -1,5 +1,5 @@
 //Todas las funciones middlware para produccion las vamos a poner acá.
-const helment = require("helmet");
+const helmet = require("helmet");
 const compression = require("compression");
 
 module.exports = function(app) {
