@@ -11,14 +11,17 @@ To do this there are two ways, for example using the .crx file but in this tutor
 So we have to install the extension in the browser.
 
 chrome://version/
-
+</br>
 Ctrl + Shift + G
 Search ~/Library
 Application Support -> Google -> Chrome -> Default -> Extensions
-
-chrome://extensions/
+</br>
+Go to chrome://extensions/
+</br>
 Activate the developer mode
+</br>
 Copy the extension id
+</br>
 Go to the path:
 Application Support -> Google -> Chrome -> Default -> Extensions
 
