@@ -1,30 +1,30 @@
-npm i -g protractor
-webdriver-manager update
-webdriver-manager start
+1. npm i -g protractor
+2. webdriver-manager update
+3. webdriver-manager start
 
-Download the extension to start in the browser.
+4. Download the extension to start in the browser.
 
-Search the extension modheader: https://chrome.google.com/webstore/detail/modheader/idgpnmonknjnojddfkpgkljpfnnfcklj?hl=es
+5. Search the extension modheader: https://chrome.google.com/webstore/detail/modheader/idgpnmonknjnojddfkpgkljpfnnfcklj?hl=es
 
-To do this there are two ways, for example using the .crx file but in this tutorial we are going to use the files of the extension.
+6. To do this there are two ways, for example using the .crx file but in this tutorial we are going to use the files of the extension.
 
-So we have to install the extension in the browser.
+7. So we have to install the extension in the browser.
 
-chrome://version/
+8. Run : chrome://version/
 </br>
-Ctrl + Shift + G
-Search ~/Library
+9. Run  Ctrl + Shift + G
+10. Search ~/Library
 Application Support -> Google -> Chrome -> Default -> Extensions
 </br>
-Go to chrome://extensions/
+11. Go to chrome://extensions/
 </br>
-Activate the developer mode
+12. Activate the developer mode
 </br>
-Copy the extension id
+13. Copy the extension id
 </br>
-Go to the path:
+14. Go to the path:
 Application Support -> Google -> Chrome -> Default -> Extensions
-
+15. Copy the folder into your project.
 
 
 
