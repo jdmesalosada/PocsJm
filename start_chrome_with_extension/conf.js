@@ -1,6 +1,6 @@
 
 const path = require('path');
-
+const loadExtension = require('./loadExtension');
 exports.config = {
 
     capabilities: {
@@ -15,37 +15,6 @@ exports.config = {
     specs: ['test.js'],
 
     onPrepare: function () {
-        /*return (
-         browser.get('chrome-extension://idgpnmonknjnojddfkpgkljpfnnfcklj/settings.tmpl.html'),
-         browser.executeScript(`(
-             "localStorage.setItem('profiles', JSON.stringify([{                " +
-             "  title: 'Selenium', hideComment: true, appendMode: '',           " +
-             "  headers: [                                                      " +
-             "    {enabled: true, name: 'mi-ip', value: '127.0.0.1', comment: ''}, " +
-             "  ],                                                              " +
-             "  respHeaders: [],                                                " +
-             "  filters: []                                                     " +
-             "}]));                                                             ")`
-         ));*/
-
-        var doTheFuncyStuff = function () {
-            angular
-                .module('doTheFuncyStuff', [])
-                .run([function () {
-                    return (browser.get('chrome-extension://idgpnmonknjnojddfkpgkljpfnnfcklj/settings.tmpl.html'),
-                        browser.executeScript(
-                            (
-                                "localStorage.setItem('profiles', JSON.stringify([{                " +
-                                "  title: 'Selenium', hideComment: true, appendMode: '',           " +
-                                "  headers: [                                                      " +
-                                "    {enabled: true, name: 'X-New-Membership', value: 'true', comment: ''}, " +
-                                "  ],                                                              " +
-                                "  respHeaders: [],                                                " +
-                                "  filters: []                                                     " +
-                                "}]));                                                             ")
-                        ))
-                }]);
-        };
-
+        return loadExtension();
     },
 }
