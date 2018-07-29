@@ -53,23 +53,23 @@ export class EnterCredentials implements Task{
     }
 
     constructor(private username:string, private pass: string){}
-}
-*/
+}*/
 
-export const EnterPass = (pass: string) => Task.where("#actor enters the pass",
+export const EnterPass = (pass: string) => Task.where('#actor enters the pass',
     Enter.theValue(pass).into(Login.Pass_Field)
-)
+);
 
-export const EnterUsername = (username: string) => Task.where("#actor enters the username",
+
+export const EnterUsername = (username: string) => Task.where('#actor enters the username',
     Enter.theValue(username).into(Login.Username_Field)
-)
+);
 
-export const CLickSignIn = () => Task.where("#actor clicks on enter",
+export const CLickSignIn = () => Task.where('#actor clicks on enter button',
     Click.on(Login.SignIn_Button)
-)
+);
 
-export const EnterCredentials = (username:string, pass:string) => Task.where("#actor enters its credentials",
-    EnterPass(pass),
+export const EnterCredentials = (username: string, pass: string) => Task.where('#actor enters its credentials',
     EnterUsername(username),
+    EnterPass(pass),
     CLickSignIn()
-)
+);
