@@ -1,0 +1,79 @@
+
+> serenitybd@1.0.0 test C:\Users\julianm\Downloads\PocsJm\SerenityJs-Database-Poc
+> npm run protractor
+
+
+> serenitybd@1.0.0 preprotractor C:\Users\julianm\Downloads\PocsJm\SerenityJs-Database-Poc
+> npm run webdriver:update -- --standalone
+
+
+> serenitybd@1.0.0 webdriver:update C:\Users\julianm\Downloads\PocsJm\SerenityJs-Database-Poc
+> npm run webdriver-manager update "--standalone"
+
+
+> serenitybd@1.0.0 webdriver-manager C:\Users\julianm\Downloads\PocsJm\SerenityJs-Database-Poc
+> node ./node_modules/protractor/bin/webdriver-manager "update"
+
+[11:24:26] I/update - chromedriver: file exists C:\Users\julianm\Downloads\PocsJm\SerenityJs-Database-Poc\node_modules\protractor\node_modules\webdriver-manager\selenium\chromedriver_2.33.zip
+[11:24:26] I/update - chromedriver: unzipping chromedriver_2.33.zip
+[11:24:26] I/update - selenium standalone: file exists C:\Users\julianm\Downloads\PocsJm\SerenityJs-Database-Poc\node_modules\protractor\node_modules\webdriver-manager\selenium\selenium-server-standalone-3.7.1.jar
+[11:24:26] I/update - selenium standalone: selenium-server-standalone-3.7.1.jar up to date
+[11:24:27] I/update - geckodriver: file exists C:\Users\julianm\Downloads\PocsJm\SerenityJs-Database-Poc\node_modules\protractor\node_modules\webdriver-manager\selenium\geckodriver-v0.19.1.zip
+[11:24:27] I/update - geckodriver: unzipping geckodriver-v0.19.1.zip
+[11:24:27] I/update - geckodriver: geckodriver-v0.19.1.exe up to date
+
+> serenitybd@1.0.0 protractor C:\Users\julianm\Downloads\PocsJm\SerenityJs-Database-Poc
+> node ./node_modules/protractor/bin/protractor ./protractor.conf.js --silent
+
+[11:24:28] I/launcher - Running 1 instances of WebDriver
+[11:24:28] I/local - Starting selenium standalone server...
+[11:24:30] I/local - Selenium standalone server started at http://192.168.0.5:52651/wd/hub
+Feature: User is able to navigate through the application
+
+    In order to focus on things that matter
+    James would like to navigate through the application
+    to validate it is working as expected
+
+  Scenario: Unsuccesful login
+  [33m? Given that James opens the Login page[39m
+  [33m? When he enters a wrong credentials[39m
+  [33m? Then he should be warned about the invalid credentials[39m
+
+Warnings:
+
+1) Scenario: [1mUnsuccesful login[22m - [90mfeatures\navigate\login.feature:7[39m
+   Step: [1mGiven that James opens the Login page[22m - [90mfeatures\navigate\login.feature:9[39m
+   Message:
+     [33mUndefined. Implement with the following snippet:
+
+       this.Given(/^that James opens the Login page$/, function (callback) {
+         // Write code here that turns the phrase above into concrete actions
+         callback(null, 'pending');
+       });[39m
+
+2) Scenario: [1mUnsuccesful login[22m - [90mfeatures\navigate\login.feature:7[39m
+   Step: [1mWhen he enters a wrong credentials[22m - [90mfeatures\navigate\login.feature:10[39m
+   Message:
+     [33mUndefined. Implement with the following snippet:
+
+       this.When(/^he enters a wrong credentials$/, function (callback) {
+         // Write code here that turns the phrase above into concrete actions
+         callback(null, 'pending');
+       });[39m
+
+3) Scenario: [1mUnsuccesful login[22m - [90mfeatures\navigate\login.feature:7[39m
+   Step: [1mThen he should be warned about the invalid credentials[22m - [90mfeatures\navigate\login.feature:11[39m
+   Message:
+     [33mUndefined. Implement with the following snippet:
+
+       this.Then(/^he should be warned about the invalid credentials$/, function (callback) {
+         // Write code here that turns the phrase above into concrete actions
+         callback(null, 'pending');
+       });[39m
+
+1 scenario ([33m1 undefined[39m)
+3 steps ([33m3 undefined[39m)
+0m00.001s
+[11:24:35] I/local - Shutting down selenium standalone server.
+[11:24:35] I/launcher - 0 instance(s) of WebDriver still running
+[11:24:35] I/launcher - chrome #01 passed
