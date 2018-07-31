@@ -1,5 +1,5 @@
-import { Task, PerformsTasks } from "../../node_modules/serenity-js/lib/screenplay";
-import { Open, UseAngular } from "../../node_modules/serenity-js/lib/serenity-protractor";
+import { Task, PerformsTasks } from "serenity-js/lib/screenplay";
+import { Open, UseAngular } from "serenity-js/lib/serenity-protractor";
 
 export class Navigate implements Task {
 

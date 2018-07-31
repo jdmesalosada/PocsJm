@@ -1,5 +1,5 @@
-import { Target } from "../../../node_modules/serenity-js/lib/serenity-protractor";
-import { by } from "../../../node_modules/protractor";
+import { Target } from "serenity-js/lib/serenity-protractor";
+import { by } from "protractor";
 
 
 export const Login = {
