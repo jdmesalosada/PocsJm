@@ -75,7 +75,7 @@ export const EnterCredentials = (username: string, pass: string) => Task.where('
     EnterPass(pass),
     //CLickSignIn()
     Pause.for(2000),
-    Refresh.Page(),
+    //Refresh.Page(),
     Pause.for(2000),
-    Refresh.Page(),
+    //Refresh.Page(),
 );

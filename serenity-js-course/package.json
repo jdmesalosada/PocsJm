@@ -4,14 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prepublish": "npm run setup",
-    "preprotractor": "npm run webdriver:update -- --standalone",
-    "protractor": "node ./node_modules/protractor/bin/protractor ./protractor.conf.js --silent",
-    "setup": "npm run typings -- install",
-    "test": "npm run protractor",
-    "typings": "typings",
-    "webdriver-manager": "node ./node_modules/protractor/bin/webdriver-manager",
-    "webdriver:update": "npm run webdriver-manager update"
+    "clean": "rimraf target",
+    "pretest": "serenity update",
+    "pree2e": "npm run webdriver:update -- --standalone --versions.standalone=2.53.1",
+    "e2e": "protractor ./protractor.conf.js",
+    "report": "serenity run",
+    "test": "failsafe clean e2e report",
+    "webdriver:update": "webdriver-manager update"
   },
   "author": "Julian Mesa",
   "maintainers": [
@@ -25,5 +24,10 @@
     "serenity-js": "^1.10.1",
     "ts-node": "3.3.0",
     "typescript": "2.6.1"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0"
   }
 }
