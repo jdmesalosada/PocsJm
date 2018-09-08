@@ -73,9 +73,5 @@ export const CLickSignIn = () => Task.where('#actor clicks on enter button',
 export const EnterCredentials = (username: string, pass: string) => Task.where('#actor enters its credentials',
     EnterUsername(username),
     EnterPass(pass),
-    //CLickSignIn()
-    Pause.for(2000),
-    //Refresh.Page(),
-    Pause.for(2000),
-    //Refresh.Page(),
+    CLickSignIn(),
 );

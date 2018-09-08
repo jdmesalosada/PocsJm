@@ -1,5 +1,6 @@
 import { Navigate } from "../../src/navigate/navigate";
 import { EnterCredentials } from "../../src/login/enter_credentials";
+import { LoginWasUnsuccesful } from "../../src/login/questions/login_was";
 
 export = function loginSteps() {
 
@@ -17,7 +18,9 @@ export = function loginSteps() {
     });
 
     this.Then(/^he should be warned about the invalid credentials$/, function () {
-        
+        return this.stage.theActorInTheSpotlight().attemptsTo(
+            LoginWasUnsuccesful()
+        )
     });
 
 }
