@@ -1,30 +1,56 @@
+import matchers.IsResponse;
 import matchers.IsResponse2;
+import matchers.combinable.HasLastName;
+import matchers.combinable.HasName;
 import model.User;
 import model.User2;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
+import static matchers.combinable.MyCombinableMatcher.all;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class Test1 {
 
+    User actualUser = new User();
+    User expectedUser = new User();
 
-    public static void main(String args[]) {
+    @BeforeTest
+    public void setup(){
 
-        User actualUser = new User();
-        actualUser.setName("Julian");
+        actualUser.setName("Julian1");
         actualUser.setLastName("Mesa");
 
-        User expectedUser = new User();
         expectedUser.setName("Julian");
         expectedUser.setLastName("Mesa2");
+    }
+
+
+    @Test
+    public void isResponseTest() {
 
         User2 user2 = new User2();
-        //assertThat(user2, IsResponse.isEqual(expectedUser)); // This is wrong due the typesafematchers expects a User type doesn't User2.
+        /*
+        assertThat(user2, IsResponse.equal(expectedUser));
+        * This is wrong due the typesafematchers expects a User type doesn't User2.
+        * */
+        //First parameter the actual, second parameter is the matcher.
+        assertThat(actualUser, IsResponse.isEqual(expectedUser));
+    }
 
-        //assertThat(actualUser, IsResponse.isEqual(expectedUser));
 
+    @Test
+    public void isResponse2Test(){
         //Fist the actual, second the matcher(expected)
         assertThat(actualUser, IsResponse2.isEqual(expectedUser));
+    }
 
+
+    @Test
+    public void combinableTest(){
+        //Fist the actual, second the matcher(expected)
+        assertThat(actualUser, all(HasName.equal(expectedUser))
+                .and(HasLastName.equal(expectedUser))) ;
     }
 
 }

@@ -7,17 +7,21 @@ import org.hamcrest.TypeSafeMatcher;
 
 public class HasLastName {
 
-    public static Matcher<User> isEqual(final String expectedLastName) {
+    public static Matcher<User> equal(final User expectedUser) {
         return new TypeSafeMatcher<User>() {
             @Override
             protected boolean matchesSafely(User actualUser) {
-                return actualUser.getLastName().equals(expectedLastName);
+                return actualUser.getLastName().equals(expectedUser.getLastName());
             }
 
             public void describeTo(Description description) {
                 {
-                    description.appendText(expectedLastName);
+                    description.appendText("Last name should be: " + expectedUser.getLastName());
                 }
+            }
+
+            public void describeMismatchSafely(final User actualUser, final Description mismatchDescription) {
+                mismatchDescription.appendText(" was ").appendValue(actualUser.getLastName());
             }
 
         };
