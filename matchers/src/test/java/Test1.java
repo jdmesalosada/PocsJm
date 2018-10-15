@@ -1,7 +1,8 @@
 import matchers.IsResponse;
 import matchers.IsResponse2;
-import matchers.combinable.HasLastName;
-import matchers.combinable.HasName;
+import matchers.combinable.ExpectedUserMatcher;
+import matchers.combinable.HasLastNameMatcher;
+import matchers.combinable.HasNameMatcher;
 import model.User;
 import model.User2;
 import org.testng.annotations.BeforeTest;
@@ -16,7 +17,7 @@ public class Test1 {
     User expectedUser = new User();
 
     @BeforeTest
-    public void setup(){
+    public void setup() {
 
         actualUser.setName("Julian1");
         actualUser.setLastName("Mesa");
@@ -40,17 +41,24 @@ public class Test1 {
 
 
     @Test
-    public void isResponse2Test(){
+    public void isResponse2Test() {
         //Fist the actual, second the matcher(expected)
         assertThat(actualUser, IsResponse2.isEqual(expectedUser));
     }
 
 
     @Test
-    public void combinableTest(){
+    public void combinableTest() {
         //Fist the actual, second the matcher(expected)
-        assertThat(actualUser, all(HasName.equal(expectedUser))
-                .and(HasLastName.equal(expectedUser))) ;
+        assertThat(actualUser, all(HasNameMatcher.equal(expectedUser))
+                .and(HasLastNameMatcher.equal(expectedUser)));
+    }
+
+    @Test
+    public void expectedUserMatcherTest() {
+        //Fist the actual, second the matcher(expected)
+        assertThat(actualUser, all(ExpectedUserMatcher.hasName(expectedUser))
+                .and(ExpectedUserMatcher.hasLastName(expectedUser)));
     }
 
 }
